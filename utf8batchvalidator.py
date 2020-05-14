@@ -4,10 +4,9 @@ import glob
 import subprocess
 
 droidfile = input("Please enter filepath of DROID CSV: ") #this line lets you state the DROID CSV which contains files you want to validate identifying as extension
+droidfile = droidfile.strip('"')
 output = os.path.basename(os.path.normpath(droidfile))
-output = output.replace(".csv","") + "_validator_output" 
-if not os.path.exists(output):
-      os.makedirs(output)
+output = output.replace(".csv","") + "_validator_output"
 extension = []
 outputlist = []
 count = int(1)
@@ -28,11 +27,11 @@ for file in extension: #runs validator over files, if filename already exists it
 	fileoutput = os.path.basename(os.path.normpath(file))
 	if os.path.exists(output+ "\\" + fileoutput+ ".txt"):
 		fileoutput = fileoutput + "[" + str(count) + "]"
-		command = "validate.bat " + '"' + file + '"'+ " > " + output + "\\" + '"' + fileoutput +'"' + ".txt"
+		command = "validate.bat " + '"' + file + '"'+ " > " + '"' + output + "\\" + fileoutput + ".txt" + '"'
 		count += 1
 		subprocess.run(command)
 	else:
-		command = "validate.bat " + '"' + file + '"'+ " > " + output + "\\" + '"' + fileoutput +'"' + ".txt"
+		command = "validate.bat " + '"' + file + '"'+ " > " + '"' + output + "\\" + fileoutput + ".txt" + '"'
 		subprocess.run(command)
 	
 
